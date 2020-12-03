@@ -7,12 +7,16 @@ public class Ability {
     //ADDED
     private int cooldown;
     private int cooldownCounter;
+    public int level;
+    boolean unlocked;
     //ADDED
-    public Ability(String name, int abilityDamage, int cooldown, int cooldownCounter) {
+    public Ability(String name, int abilityDamage, int cooldown, int cooldownCounter, boolean unlocked, int level) {
         this.name = name;
         this.abilityDamage = abilityDamage;
         this.cooldown=cooldown;
         this.cooldownCounter=cooldownCounter;
+        this.unlocked=unlocked;
+        this.level=level;
     }
 
     public String getName() {
@@ -46,4 +50,16 @@ public class Ability {
     public void setAbilityDamage(int weaponDamage) {
         this.abilityDamage = weaponDamage;
     }
+     public void displayAbility(){
+    System.out.println(" "+name);
+    }
+     public boolean getAbilityStatus(){
+    return unlocked;
+}
+     public void unlockAbility(){
+     this.unlocked=true;
+     }
+     public int getCooldownAmt(){
+         return cooldown-cooldownCounter;
+     }
 }

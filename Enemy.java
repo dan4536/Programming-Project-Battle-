@@ -26,6 +26,7 @@ import java.util.Random;
         this.name = name;
         this.health = health;
         this.damage = damage;
+        this.experienceGain=experienceGain;
     }
 
     public String getName() {
@@ -69,4 +70,10 @@ import java.util.Random;
        
         }
         
-}}
+} 
+    public int getExperienceGain(){
+        return experienceGain;
+    }
+
+ 
+ }
