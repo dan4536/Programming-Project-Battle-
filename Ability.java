@@ -4,12 +4,11 @@ package game;
 public class Ability {
     private String name;
     private int abilityDamage;
-    //ADDED
     private int cooldown;
     private int cooldownCounter;
     public int level;
     boolean unlocked;
-    //ADDED
+  
     public Ability(String name, int abilityDamage, int cooldown, int cooldownCounter, boolean unlocked, int level) {
         this.name = name;
         this.abilityDamage = abilityDamage;
@@ -38,28 +37,36 @@ public class Ability {
     
     public int getCooldownCounter(){
         return cooldownCounter;
-}
+    }
     public void addCoolCounter(){
         cooldownCounter+=1;
     }
     public void resetCounter(){
     cooldownCounter=0;
     }
-    //ADDED
+   
     
     public void setAbilityDamage(int weaponDamage) {
         this.abilityDamage = weaponDamage;
     }
+    
      public void displayAbility(){
-    System.out.println(" "+name);
+     System.out.println(" "+name);
     }
+     
      public boolean getAbilityStatus(){
-    return unlocked;
-}
+     return unlocked;
+    }
+     
      public void unlockAbility(){
      this.unlocked=true;
-     }
+    }
+     
      public int getCooldownAmt(){
          return cooldown-cooldownCounter;
-     }
+    }
+     
+     public void resetCoolCounter(){
+     cooldownCounter=cooldown;
+    }
 }

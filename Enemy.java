@@ -29,6 +29,22 @@ import java.util.Random;
         this.experienceGain=experienceGain;
     }
 
+    public void attacked(int damageAmount, int myHealth) {
+        if (damageAmount >= this.health || myHealth<=0) {
+           // this.health = 0;
+            System.out.println("\t"+this.name + " is dead!");
+         
+            System.out.println("\t======================ENEMY KILLED=============================");
+            this.dead = true;
+        } else {
+            damageAmount-=10;
+            Random rn=new Random();
+            damageAmount+=rn.nextInt(10)+1;
+            this.health -= damageAmount;
+            System.out.println("\t>Your damage: "+damageAmount);
+        }
+        
+} 
     public String getName() {
         return name;
     }
@@ -54,23 +70,6 @@ import java.util.Random;
     }
 
 
-    public void attacked(int damageAmount, int myHealth) {
-        if (damageAmount >= this.health || myHealth<=0) {
-           // this.health = 0;
-            System.out.println(this.name + " is dead!");
-            this.dead = true;
-        } else {
-            damageAmount-=10;
-            Random rn=new Random();
-            damageAmount+=rn.nextInt(10)+1;
-            this.health -= damageAmount;
-
-            System.out.println("The remaining life of " + this.name + " is: " + this.health);
-
-       
-        }
-        
-} 
     public int getExperienceGain(){
         return experienceGain;
     }
