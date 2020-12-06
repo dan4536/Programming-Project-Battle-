@@ -28,7 +28,13 @@ import java.util.Random;
         this.damage = damage;
         this.experienceGain=experienceGain;
     }
-
+    
+    
+    //Attack player method
+    //See enemy's health is greater than damage
+    //If health greater
+    //Damage enemy
+    //Else enemy is dead
     public void attacked(int damageAmount, int myHealth) {
         if (damageAmount >= this.health || myHealth<=0) {
            // this.health = 0;

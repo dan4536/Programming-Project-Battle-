@@ -2,6 +2,7 @@
 package game;
 
 public class Ability {
+    
     private String name;
     private int abilityDamage;
     private int cooldown;

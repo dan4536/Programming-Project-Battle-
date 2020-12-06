@@ -35,6 +35,11 @@ import java.util.Arrays;
              maxHealth=health;
     }
     
+    //Attacked method
+    //See player's health is greater than damage
+    //If health greater
+    //Damage player
+    //Else player is dead
     public void attacked(int abilityDamage, int myHealth) {
         if ( abilityDamage>= this.health || myHealth<=0) {
            // this.health = 0;
@@ -50,7 +55,8 @@ import java.util.Arrays;
             
         }
      }
-       
+    
+    //Heal 100 hp to player
     public void heal(){
     System.out.print("\t>Your healed from "+getHealth()+" to ");
     
@@ -63,6 +69,8 @@ import java.util.Arrays;
     potion-=1;
     }
    
+    //Level up player
+    //Increase max HP
     public void levelUp(){
         
      level+=1; 
@@ -81,7 +89,9 @@ import java.util.Arrays;
         System.out.println();
         System.out.println("\t_______________________________________________________________");
      }
- 
+    
+    //Unlock skill 
+    //Display to user unlocked ability
       public void unlockSkill(Ability ability){
       if(ability.level==getLevel()){
           
@@ -162,6 +172,7 @@ import java.util.Arrays;
      health=maxHealth;
     }
      
+     //Reset player's dead to false
      public void resurrect(){
      dead=false;
      System.out.println("\t>You ressurect from using the gift of god");

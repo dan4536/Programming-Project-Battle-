@@ -11,14 +11,16 @@ public class Game {
          
     public static void main(String[] args) {
        
-        
         Scanner sc = new Scanner(System.in);
+        
+        //Create abilities 
         Ability Basic = new Ability("Basic Attack", 15,0,0,true,1);
         Ability Whirl = new Ability("Whirlwind Strike", 30,2,2,false,2);
         Ability Infernal = new Ability("Infernal Blaze", 50,3,3,false,3);
         Ability Slash = new Ability("Slash of hermes", 70,4,4,false,4);
         Ability Hell = new Ability("Hell's Damnation", 100,5,5,false,5);
         
+        //Create Enemies, Advanced Enemy, Boss Lucifer and Castelo
         Enemy basicEnemy = new Enemy("Demon", 40, 10,10);
         Enemy basicEnemy2 = new Enemy("Assasin", 60, 15,20);
         Enemy basicEnemy3 = new Enemy("Ramiel", 80, 20,30);
@@ -28,6 +30,7 @@ public class Game {
         Enemy Lucifer = new Enemy("Lucifer", 200,60,90);
         Enemy Castelo = new Enemy("Castelo", 780, 75,100 );
         
+        //Array list of object Enenmy for convenience(printing list and order
         ArrayList<Enemy> enemyList = new ArrayList<>();
         enemyList.addAll(Arrays.asList(
                 basicEnemy,
@@ -40,36 +43,50 @@ public class Game {
                 Castelo
                 
         ));
-     
-        size = enemyList.size();
-      
-        //for (int i = 0; i < enemyList.size(); i++) {
-          //  System.out.println((i + 1) + ". character: " + enemyList.get(i).getName());
-          
-        //}
-        
+    
+        //Introduction to players
         introduction();
+        
+        //User prompt for name
         System.out.println("\tEnter your name ");
         String myName = sc.nextLine();
+        
+        //Character creation
         Character player = new Character(myName, 250, 15);
+        
+        //Plot 1 
         plot1(player);
+        
+        //A loop for battling all the enemies
          for (int i = 0; i < enemyList.size(); i++) {
              
+             //Loop will execute these functions 
+             //Only if player is not dead
              if(!player.isDead()){
+                 
+                //Boss battle 1 : LUCIFER
                 if(i==3)
                 plot2(player);
+                
+                //Boss battle 2: CASTELO
                 if(i==7)
                  plot4(player);
+                
+                //Call the battle function
+                //Taking in the player and abilities object
                 battle(enemyList.get(i), player, Basic, Whirl, Infernal,Slash,Hell);
+                
+                //If Lucifer defeated and player not dead
                 if(i==3&&!player.isDead())
                 plot3(player);
+                
+                //If Castelo defeated and player not dead
                 if(i==7&&!player.isDead()){               
                     System.out.println("_____________________________________________________________");
                     plot5(player);
                     System.out.println("Congratulations you have finished the game! But is it over?...");
                 }                
-              
-                 
+                
             }
          }
 
@@ -85,6 +102,8 @@ public class Game {
         
         Scanner sc=new Scanner(System.in);
         
+        //Create arraylist for abilities
+        //abilityList 
         ArrayList<Ability> abilityList = new ArrayList<>();
         abilityList.addAll(Arrays.asList(
                 ab1,
@@ -94,6 +113,8 @@ public class Game {
                 ab5
         ));
        
+        //Display name, health,life, level and potion of the player
+        //And show details of the next enemy 
         System.out.println("\t===============================================================");
         System.out.println();
         System.out.println( "\t"+player.getName());
@@ -112,27 +133,28 @@ public class Game {
         //Until player or enemy is dead
         while (!enemy.isDead() && !player.isDead()) {
                
-                
-                
-                
+       
                 //Using the boolean variable checkInput
                 //to see whether user input is valid
                 //If user input fails 
                 //Loop over until valid input from 
                 //1-6 only
                 checkInput=false;
+                
+                
                 while (checkInput==false)                                   {
                     
                 System.out.println();
                 System.out.println("\tWhat would you like to do?");
                 System.out.println();
                 
-                 //Print out the ability list for user input prompt
+                
+                //Print out the ability list for user input prompt
                 //Loops through the arraylist
                 //The ability with unlocked = true will have 
                 //Name and cooldown amount printed
                 //else 
-                //Ability locked 
+                //Print out Ability locked 
                  for (int i = 0; i < abilityList.size(); i++) {
           
                 System.out.print("\t"+(i+1)+".");
@@ -156,7 +178,13 @@ public class Game {
         }
                 System.out.println("\t6.Use potion to heal 100 hp. You have "+ player.getPotion()+" potions in your bag");
                 
+                //Takes in user input 
                 int choice = sc.nextInt();
+                
+                //Checks user input for numbers 1-6
+                //Depending on unlocked or locked abilities
+                //and on cooldown or not
+                //Executes accordingly
                 switch (choice) {
                 case 1:
                     player.setDamage(10);
@@ -177,7 +205,7 @@ public class Game {
                     }
                     else
                         System.out.println("\tThe ability is locked please select another ability");
-                        
+                        break;
                    
                     
                 case 3:
@@ -239,8 +267,10 @@ public class Game {
                     else{
                         System.out.println("\tYou have no more potions ");
                     }
-                   
+                    
+                   //If the number is not from 1-6 
                 default:
+                    
                     if(choice!=1&&choice!=2&&choice!=3&&choice!=4&&choice!=5&&choice!=6){
                     System.out.println("\tInput is not valid please enter from numbers 1-6 only");
                     } 
@@ -250,7 +280,8 @@ public class Game {
                 }
                 
               }
-                //ALL THE COUNTERS THAT DOES NOT MATCH ADD ONE TO THEM
+                
+                //All the abilities on cooldown add one to their counter             
                 if(ab2.getCooldownAmt()>0){
                     ab2.addCoolCounter();
                 }
@@ -264,23 +295,32 @@ public class Game {
                  if(ab5.getCooldownAmt()>0){
                     ab5.addCoolCounter();
                 }
-                //need to WORK ON THIS
+                 
+                //Player isn't dead attack enemy
                 if(!player.isDead()){
                 enemy.attacked(player.getDamage(), enemy.getHealth());
                 }
+                
+                //Enemy isn't dead attack player
                 if(!enemy.isDead())
                 player.attacked(enemy.getDamage(), player.getHealth());
                 
                 System.out.println();
+                
+                //Show health of player if not dead
                 if(!player.isDead())
                 System.out.println("\t"+player.getName()+"'s health: "+player.getHealth());
+                
+                //Show health of nemey if not dead
                 if(!enemy.isDead()&&!player.isDead())
                 System.out.println("\t"+enemy.getName()+"'s health: "+enemy.getHealth());
                 
-                //characterList.get(whichCharacter).attack(characterList.get(whichCharacter).getDamage(), player.getHealth());
-               //REMOVE THIS LATER
+                
+               //Enemiy dies
+               //Add poitions
+               //Add expeirence
                 if(enemy.isDead()){
-                    player.addEnemy();
+                   
                     System.out.println("\tYou recieved a potion from the battle");
                     player.addPotion();
                     player.addExperienceGain(enemy);
@@ -298,10 +338,12 @@ public class Game {
                         System.out.print("/350");
                     }
                     System.out.println();
-                    //resets cooldown counter after battle
+                    
+                    //resets cooldown for abilities after each battle
                     for(int i=0;i<abilityList.size();i++){
                     abilityList.get(i).resetCoolCounter();
                     }
+                    
                     //Check experience to level up and unlock ability
                     switch(player.getExperience()){
                         case 60:player.levelUp();
@@ -322,8 +364,16 @@ public class Game {
                                 break;
                         default: break;
                     }
-          //LOOP THAT CHECKS ARRAYLIST OF ABILITIES AND EXECUTES THE FUNCTION CHECK LEVEL
+         
                 }
+                
+                
+                //Player dies
+                //If still have lives
+                //Reset health
+                //Add 2 potions
+                //ressurect
+                //Else game over
                 if(player.isDead()){
                 if(player.getLife()>0){
                 System.out.println();
@@ -354,18 +404,18 @@ public class Game {
      //BATTLE METHOD
     
     
-    public static int random() {
-        int szam = (int) (Math.random() * size);
-        return szam;
-    }
 
+//Method to print story/dialogue speech line and newline
+//User enters to progress
 public static void plots(String plot){
         System.out.println("\t"+plot);
         Scanner sc = new Scanner(System.in);
        
         sc.nextLine();
     }
-public static void introduction(){
+
+    //INTRODUCTION 
+    public static void introduction(){
     plots("Welcome to Hell's Damnation where you will have to fight your way up to the top, press enter to continue");
     plots("You will have your first ability which is basic attack");
     plots("And as you progress and level up");
@@ -383,7 +433,9 @@ public static void introduction(){
     System.out.println();
     System.out.println();
    
+    
 }
+    //FIRST BATTLE WITH DEMON
     public static void plot1(Character player){
         plots("When you first arrived to this world, you were gifted as the natural ruler of the world.");
         plots("People from all over the world came to visit you and gift you various possessions of a true King.");
@@ -410,32 +462,34 @@ public static void introduction(){
         plots("The demon opens a portal");
         plots("You follow into the purple vortex");
         plots("As pass through and step your next foot down");
-        plots("You look up and see the fierypits and lava rivers");
+        plots("You look up and see the fiery pits and lava rivers");
         plots("Screamings of people in torment");
         plots("Realising that you have step foot in Hell");
         plots("The demon's spell wears off");
-        plots("You think to yourself, 'I have to kill him' ");
+        plots("You think to yourself, \"I have to kill him\" ");
     	plots("The fight has just begun.");
     }
 
+    //LUCIFER BOSS BATTLE PLOT
     public static void plot2(Character player){
         plots("As you defeated Ramiel, someone approaches");
         plots("He gets closer");
         plots("A red faced individul with horns ");
         plots("None other than the king of hell..");
         plots("Lucifer Morningstar");
+        System.out.println();
         plots("Lucifer: At Last! My goons couldn’t finish you off. When I’m here, might as well have the pleasure of cutting you head off.");
         plots(player.getName()+": Lucifer, you bastard! You will pay for what you did to my parents.");
         plots("Lucifer: Little boy, I am tired of torturing your parents in hell. Why don’t I take you there once I kill you?");
     	plots(player.getName()+": Try me you sick freak! Release my parents once I defeat you.");
     	plots("Lucifer: Ruler of the world? PFFT! You are nothing more than a grain of rice. Draw you sword young one. Let’s see if you are all talk.");
-    	plots(player.getName()+" Bring it on!");
+    	plots(player.getName()+": Bring it on!");
     	   
     }
-
+    //LUCIFER DEFEATED PLOT
     public static void plot3(Character player){
         plots("Lucifer: Now…ARRGHH…I… See… Why… Castelo… wanted to…. Kill you so bad…");
-    	plots("You: Bring back my parents, like you promised.");
+    	plots("You: Bring back my parents, like you promised");
     	plots("Lucifer: You fool! *cough* *cough* I… made no such promise… to you… Ha… Ha… You should ask Castelo… Where he kept them…*Spits blood*");
     	plots("Lucifer collapses and transcends into a black hole");
         plots("Furious than ever, you shouted in anger on the top of your lungs");
@@ -449,6 +503,7 @@ public static void introduction(){
         plots("Was coming for you");
     	
     }
+    //CASTELO BATTLE PLOT
     public static void plot4(Character player){
     	plots("Castelo: Ahh there you are… You’ve been reeking havoc everywhere you go haven’t you. Should have known you crossed a line when you slayed my right hand man");
     	plots("Castelo: Did you really think he took them to hell? Well he told you only half the truth.");
@@ -457,7 +512,7 @@ public static void introduction(){
     	plots(player.getName()+": You waste space, you will pay!");
 
     }
-    
+    //ENDING CASTELO DEFEATED
     public static void plot5(Character player){
         plots("Castelo: H-h-how… could… this… be…" + "\n\t" + "Such power… given to… someone not worthy…" + "\n\t" + "should have… listened to the stars… they were right….");
         plots(player.getName()+": Quit yapping and give me that damn box you pathetic sack of shit.");
